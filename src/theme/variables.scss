@@ -1,0 +1,38 @@
+/* In src/theme/variables.scss */
+:root {
+  /** Ionic CSS Variables **/
+  
+  /* Set the default text color for dark mode */
+  --ion-text-color: #ffffff;
+  --ion-text-color-rgb: 255, 255, 255;
+
+  /* * PRIMARY (CTA) COLOR 
+   * Used for: Main buttons, links, toggles, floating button
+   */
+  --ion-color-primary: #29b6f6;
+  --ion-color-primary-rgb: 41, 182, 246;
+  --ion-color-primary-contrast: #000000;
+  --ion-color-primary-contrast-rgb: 0, 0, 0;
+  --ion-color-primary-shade: #24a0d9;
+  --ion-color-primary-tint: #3ebcf7;
+
+  /* * Dark theme color overrides
+   * (Ensures backgrounds are dark and text is light) 
+   */
+  .ios,
+  .md {
+    --ion-background-color: #1a1a2e;
+    --ion-background-color-rgb: 26, 26, 46;
+
+    --ion-text-color: #ffffff;
+    --ion-text-color-rgb: 255, 255, 255;
+
+    --ion-color-step-50: #2a2a40;
+    --ion-color-step-100: #33334f;
+    /* ...and so on */
+
+    /* For Phase 2: Translucent cards */
+    --ion-item-background: rgba(255, 255, 255, 0.08);
+    --ion-card-background: rgba(255, 255, 255, 0.08);
+  }
+}

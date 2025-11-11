@@ -1,0 +1,35 @@
+/* Make the modal's header and content transparent */
+:host {
+  ion-header ion-toolbar,
+  ion-content,
+  ion-footer ion-toolbar {
+    --background: transparent;
+  }
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.form-field {
+  --background: rgba(255, 255, 255, 0.08);
+  --padding-start: 12px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.error-message {
+  color: var(--ion-color-danger, #f53d3d);
+  font-size: 0.8rem;
+  padding-left: 12px;
+  margin-bottom: 1rem;
+}
+
+/* Sticky footer button */
+.main-action-button {
+  margin: 0 16px 16px 16px;
+}

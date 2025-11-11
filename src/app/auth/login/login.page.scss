@@ -1,0 +1,103 @@
+/* Remove the top-level padding, as the card will handle it */
+:host {
+  ion-content {
+    --padding-start: 0;
+    --padding-end: 0;
+  }
+}
+
+.center-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%; // Use min-height to allow scrolling on small screens
+  padding: 1rem; // Add padding around the card
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 500px;
+  
+  /* * This is what you asked for: "use some white color"
+   * It's 10% opaque white. We can easily make this
+   * more or less opaque (e.g., 0.15 or 0.08)
+   */
+  --background: rgba(255, 255, 255, 0.1);
+
+  /* We already styled border-radius and shadow in global.scss */
+}
+
+/* Make the header text bigger */
+ion-card-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* Form field styles */
+.form-field {
+  --background: rgba(255, 255, 255, 0.08);
+  --padding-start: 12px;
+  border-radius: 8px;
+  margin-bottom: 8px; 
+}
+
+.error-message {
+  color: var(--ion-color-danger, #f53d3d);
+  font-size: 0.8rem;
+  padding-left: 12px;
+  margin-bottom: 1rem;
+}
+
+.form-links {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.forgot-link {
+  font-size: 0.9rem;
+  color: var(--ion-color-primary);
+  text-decoration: none;
+}
+
+.main-action-button {
+  margin-top: 1rem;
+}
+
+.separator {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 1.5rem 0;
+  display: flex;
+  align-items: center;
+
+  &::before, &::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  &::before { margin-right: 0.5em; }
+  &::after { margin-left: 0.5em; }
+}
+
+.button-outline-white {
+  margin-bottom: 1rem;
+}
+
+/* Bottom link (outside card) */
+.bottom-link {
+  text-align: center;
+  margin-top: 1.5rem; // Space from the card
+  margin-bottom: 1rem; // Space from bottom
+  color: rgba(255, 255, 255, 0.8);
+
+  a {
+    font-weight: bold;
+    color: var(--ion-color-primary);
+    text-decoration: none;
+    margin-left: 4px;
+  }
+}

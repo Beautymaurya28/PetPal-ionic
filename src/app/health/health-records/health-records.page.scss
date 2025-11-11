@@ -1,0 +1,101 @@
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+  
+  ion-spinner {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+/* Style for the filter bar */
+ion-segment {
+  --background: transparent;
+
+  ion-segment-button {
+    --color: rgba(255, 255, 255, 0.5);
+    --color-checked: var(--ion-color-primary);
+    --indicator-color: var(--ion-color-primary);
+    --ripple-color: var(--ion-color-primary);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+}
+
+/* Style for the list */
+.records-list {
+  padding: 16px;
+}
+
+.record-card {
+  --background: var(--ion-card-background);
+  margin: 0 0 12px 0; // Remove side margins, add bottom
+  width: 100%;
+  
+  ion-card-header {
+    padding-bottom: 8px;
+  }
+  
+  .pet-name-badge {
+    // This is the little "Cavin" or "Buddy" badge
+    background: var(--ion-color-primary);
+    color: #000;
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+
+  ion-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+  }
+  ion-card-subtitle {
+    // This is for the date
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding-top: 4px;
+  }
+  p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    white-space: pre-wrap;
+  }
+}
+
+/* Empty state for "No records" */
+.empty-state,
+.empty-state-filter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  height: 60%;
+  
+  ion-icon {
+    font-size: 3.5rem;
+    color: rgba(255, 255, 255, 0.2);
+  }
+  ion-label {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 8px;
+  }
+  p {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+.empty-state-filter {
+  height: auto;
+  padding: 20px;
+}

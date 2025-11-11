@@ -1,0 +1,21 @@
+/* Styles for the new sidebar menu */
+ion-menu ion-content {
+  // Make the menu background match our app's gradient
+  --background: linear-gradient(160deg, #1f2d3a 0%, #1a1a2e 100%);
+}
+
+#menu-list {
+  background: transparent;
+  padding-top: 0px;
+}
+
+#menu-list ion-item {
+  --background: transparent;
+  --color: #ffffff; // Menu text color
+  margin-bottom: 10px;
+}
+
+.logout-button {
+  --color: rgba(255, 255, 255, 0.7); // Faded color for logout
+  margin-bottom: 20px;
+}

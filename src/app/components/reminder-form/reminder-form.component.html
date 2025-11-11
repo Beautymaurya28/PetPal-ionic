@@ -1,0 +1,83 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="transparent">
+    <ion-title>Add Reminder</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="light" (click)="dismiss()">Cancel</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form *ngIf="reminderForm" [formGroup]="reminderForm" (ngSubmit)="submitForm()">
+    <div class="form-container">
+      
+      <ion-item class="form-field">
+        <ion-input
+          formControlName="title"
+          label="Title (e.g., Morning Medicine)"
+          labelPlacement="floating"
+          type="text"
+          required
+        ></ion-input>
+      </ion-item>
+      <div *ngIf="title.invalid && (title.dirty || title.touched)" class="error-message">
+        <span>Title is required.</span>
+      </div>
+
+      <ion-item class="form-field">
+        <ion-label position="floating">Date</ion-label>
+        <ion-datetime-button datetime="reminder-date-picker"></ion-datetime-button>
+      </ion-item>
+      <div *ngIf="due_date.invalid && (due_date.dirty || due_date.touched)" class="error-message">
+        <span>Date is required.</span>
+      </div>
+      
+      <ion-item class="form-field">
+        <ion-label position="floating">Time (Optional)</ion-label>
+        <ion-datetime-button datetime="reminder-time-picker"></ion-datetime-button>
+      </ion-item>
+
+      <ion-item class="form-field">
+        <ion-label position="floating">Recurrence</ion-label>
+        <ion-select formControlName="recurrence" interface="action-sheet">
+          <ion-select-option value="none">Does not repeat</ion-select-option>
+          <ion-select-option value="daily">Daily</ion-select-option>
+          <ion-select-option value="weekly">Weekly</ion-select-option>
+          <ion-select-option value="monthly">Monthly</ion-select-option>
+        </ion-select>
+      </ion-item>
+      
+      <ion-item class="form-field">
+        <ion-textarea
+          formControlName="notes"
+          label="Notes (optional)"
+          labelPlacement="floating"
+          placeholder="e.g., 2 pills with food"
+          [autoGrow]="true"
+        ></ion-textarea>
+      </ion-item>
+
+    </div>
+  </form>
+
+  <ion-modal [keepContentsMounted]="true">
+    <ion-datetime id="reminder-date-picker" formControlName="due_date" presentation="date"></ion-datetime>
+  </ion-modal>
+  
+  <ion-modal [keepContentsMounted]="true">
+    <ion-datetime id="reminder-time-picker" formControlName="due_time" presentation="time"></ion-datetime>
+  </ion-modal>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar color="transparent">
+    <ion-button
+      (click)="submitForm()"
+      color="primary"
+      expand="block"
+      [disabled]="reminderForm.invalid"
+      class="main-action-button">
+      Save Reminder
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

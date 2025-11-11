@@ -1,0 +1,87 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="transparent">
+    <ion-title>Add Health Record</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="light" (click)="dismiss()">Cancel</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form *ngIf="recordForm" [formGroup]="recordForm" (ngSubmit)="submitForm()">
+    <div class="form-container">
+      
+      <!-- Title -->
+      <ion-item class="form-field">
+        <ion-input
+          formControlName="title"
+          label="Title (e.g., Annual Checkup)"
+          labelPlacement="floating"
+          type="text"
+          required
+        ></ion-input>
+      </ion-item>
+      <!-- SAFE navigation operator prevents null errors -->
+      <div *ngIf="title?.invalid && (title?.dirty || title?.touched)" class="error-message">
+        <span>Title is required.</span>
+      </div>
+
+      <!-- Date -->
+      <ion-item class="form-field">
+        <ion-label position="floating">Date of Record</ion-label>
+        <ion-datetime-button datetime="record-date-picker"></ion-datetime-button>
+      </ion-item>
+      <div *ngIf="date?.invalid && (date?.dirty || date?.touched)" class="error-message">
+        <span>Date is required.</span>
+      </div>
+      
+      <!-- Tags -->
+      <ion-item class="form-field">
+        <ion-input
+          formControlName="tags"
+          label="Tags (e.g., vaccine, surgery)"
+          labelPlacement="floating"
+          type="text"
+          helperText="Separate tags with a comma"
+        ></ion-input>
+      </ion-item>
+
+      <!-- Notes -->
+      <ion-item class="form-field">
+        <ion-textarea
+          formControlName="notes"
+          label="Notes (optional)"
+          labelPlacement="floating"
+          placeholder="Add any notes from the vet..."
+          [autoGrow]="true"
+        ></ion-textarea>
+      </ion-item>
+
+      <!-- Date Picker Modal -->
+      <ion-modal [keepContentsMounted]="true">
+        <!-- You cannot use formControlName inside modal, it’s not in same form context -->
+        <!-- Instead bind manually -->
+        <ion-datetime
+          id="record-date-picker"
+          [value]="recordForm.get('date')?.value"
+          (ionChange)="onDateChange($event)"
+          presentation="date"
+        ></ion-datetime>
+      </ion-modal>
+
+    </div>
+  </form>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar color="transparent">
+    <ion-button
+      color="primary"
+      expand="block"
+      (click)="submitForm()"
+      [disabled]="recordForm.invalid"
+      class="main-action-button">
+      Save Record
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

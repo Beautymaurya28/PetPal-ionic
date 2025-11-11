@@ -1,0 +1,84 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="transparent">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/welcome"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="center-container"> <ion-card class="auth-card">
+      <ion-card-header>
+        <ion-card-title>Create Account</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form [formGroup]="signupForm" (ngSubmit)="signup()">
+
+          <ion-item class="form-field">
+            <ion-input formControlName="name" label="Full Name" labelPlacement="floating" type="text" required></ion-input>
+          </ion-item>
+          <div *ngIf="name.invalid && (name.dirty || name.touched)" class="error-message">
+            <span>Full Name is required.</span>
+          </div>
+
+          <ion-item class="form-field">
+            <ion-input formControlName="email" label="Email" labelPlacement="floating" type="email" inputmode="email" required></ion-input>
+          </ion-item>
+          <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error-message">
+            <span *ngIf="email.errors?.['required']">Email is required.</span>
+            <span *ngIf="email.errors?.['email']">Please enter a valid email.</span>
+          </div>
+
+          <ion-item class="form-field">
+            <ion-input formControlName="phone" label="Phone" labelPlacement="floating" type="tel" inputmode="tel" required></ion-input>
+          </ion-item>
+          <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="error-message">
+            <span>Phone number is required.</span>
+          </div>
+
+          <ion-item class="form-field">
+            <ion-input formControlName="password" label="Password" labelPlacement="floating" type="password" required></ion-input>
+          </ion-item>
+          <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error-message">
+            <span *ngIf="password.errors?.['required']">Password is required.</span>
+            <span *ngIf="password.errors?.['minlength']">Password must be at least 6 characters.</span>
+          </div>
+
+          <ion-item class="form-field">
+            <ion-input formControlName="confirmPassword" label="Confirm Password" labelPlacement="floating" type="password" required></ion-input>
+          </ion-item>
+          <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)" class="error-message">
+            <span *ngIf="confirmPassword.errors?.['required']">Please confirm your password.</span>
+          </div>
+          <div *ngIf="signupForm.errors?.['passwordsDoNotMatch'] && (confirmPassword.dirty || confirmPassword.touched)" class="error-message">
+            Passwords do not match.
+          </div>
+
+          <ion-item class="form-field checkbox-field">
+            <ion-checkbox formControlName="terms" slot="start"></ion-checkbox>
+            <ion-label>I accept the <a (click)="showTerms()">Terms & Conditions</a></ion-label>
+          </ion-item>
+          <div *ngIf="terms.invalid && (terms.dirty || terms.touched)" class="error-message">
+            You must accept the terms.
+          </div>
+
+          <ion-button 
+            type="submit" 
+            color="primary" 
+            expand="block" 
+            [disabled]="!signupForm.valid"
+            class="main-action-button">
+            Create Account
+          </ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+
+    <div class="bottom-link">
+      <span>Already have an account?</span>
+      <a routerLink="/login">Login</a>
+    </div>
+
+  </div>
+</ion-content>

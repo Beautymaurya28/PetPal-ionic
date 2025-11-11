@@ -1,0 +1,101 @@
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+  
+  ion-spinner {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+/* Style for the filter bar */
+ion-segment {
+  --background: transparent;
+
+  ion-segment-button {
+    --color: rgba(255, 255, 255, 0.5);
+    --color-checked: var(--ion-color-primary);
+    --indicator-color: var(--ion-color-primary);
+    --ripple-color: var(--ion-color-primary);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+}
+
+/* Style for the list */
+.reminders-list {
+  --background: transparent;
+  background: transparent;
+  padding: 0 16px;
+  
+  ion-item-sliding {
+    margin-bottom: 12px;
+  }
+
+  ion-item {
+    --background: var(--ion-card-background);
+    --border-radius: 8px;
+    --inner-padding-bottom: 12px;
+    --inner-padding-top: 12px;
+
+    ion-icon {
+      font-size: 1.5rem;
+      margin-right: 12px;
+    }
+    h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+    p {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.8);
+    }
+    .recurrence {
+      font-style: italic;
+      color: var(--ion-color-primary);
+      font-size: 0.8rem;
+    }
+    .pet-name-badge {
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.8rem;
+      margin-top: 4px;
+    }
+  }
+}
+
+/* Empty state for "No records" */
+.empty-state,
+.empty-state-filter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  height: 60%;
+  
+  ion-icon {
+    font-size: 3.5rem;
+    color: rgba(255, 255, 255, 0.2);
+  }
+  ion-label {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 8px;
+  }
+  p {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+.empty-state-filter {
+  height: auto;
+  padding: 20px;
+}

@@ -1,0 +1,80 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="transparent"> <ion-buttons slot="start">
+      <ion-back-button defaultHref="/welcome"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="center-container">
+    
+    <ion-card class="auth-card">
+      <ion-card-header>
+        <ion-card-title>Login</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+          
+          <ion-item class="form-field">
+            <ion-input
+              formControlName="email"
+              label="Email"
+              labelPlacement="floating"
+              type="email"
+              inputmode="email"
+              required
+            ></ion-input>
+          </ion-item>
+          <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error-message">
+            <span *ngIf="email.errors?.['required']">Email is required.</span>
+            <span *ngIf="email.errors?.['email']">Please enter a valid email.</span>
+          </div>
+
+          <ion-item class="form-field">
+            <ion-input
+              formControlName="password"
+              label="Password"
+              labelPlacement="floating"
+              type="password"
+              required
+            ></ion-input>
+          </ion-item>
+          <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error-message">
+            <span *ngIf="password.errors?.['required']">Password is required.</span>
+          </div>
+
+          <div class="form-links">
+            <a class="forgot-link" (click)="forgotPassword()">Forgot Password?</a>
+          </div>
+
+          <ion-button 
+            type="submit" 
+            color="primary" 
+            expand="block" 
+            [disabled]="!loginForm.valid"
+            class="main-action-button">
+            Login
+          </ion-button>
+        </form>
+        
+        <div class="separator">OR</div>
+
+        <ion-button expand="block" class="button-outline-white" (click)="loginWithGoogle()">
+          <ion-icon slot="start" name="logo-google"></ion-icon>
+          Login with Google
+        </ion-button>
+        <ion-button expand="block" class="button-outline-white" (click)="loginWithPhone()">
+          <ion-icon slot="start" name="call-outline"></ion-icon>
+          Login with Phone (OTP)
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <div class="bottom-link">
+      <span>Don't have an account?</span>
+      <a routerLink="/signup">Sign Up</a>
+    </div>
+
+  </div>
+</ion-content>

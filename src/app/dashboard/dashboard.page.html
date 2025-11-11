@@ -1,0 +1,213 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="transparent">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false" color="light"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Dashboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="main-grid-container">
+
+    <ion-card class="widget-card welcome-card">
+      <ion-card-header>
+        <ion-card-title>Hey, {{ user?.name || 'Friend' }}!</ion-card-title>
+        <ion-card-subtitle>Your pet family is safe here.</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content class="stats-container">
+        <div class="stat-item">
+          <ion-icon name="paw-outline" color="primary"></ion-icon>
+          <span>{{ stats.totalPets }} Pets</span>
+        </div>
+        <div class="stat-item">
+          <ion-icon name="alarm-outline" color="primary"></ion-icon>
+          <span>0 Reminders</span>
+        </div>
+        <div class="stat-item">
+          <ion-icon name="chatbubbles-outline" color="primary"></ion-icon>
+          <span>0 New Messages</span>
+        </div>
+        <ion-button 
+          fill="clear" 
+          size="small" 
+          class="edit-profile-btn" 
+          routerLink="/profile">
+          Edit Profile
+          <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="widget-card pet-carousel-card">
+      <ion-card-header>
+        <ion-card-title>Your Pets</ion-card-title>
+        <ion-button fill="clear" size="small" (click)="addPet()">
+          <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+          Add Pet
+        </ion-button>
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngIf="isLoadingPets" class="loading-container">
+          <ion-spinner name="crescent"></ion-spinner>
+        </div>
+        <div *ngIf="!isLoadingPets" class="pet-carousel">
+          <ion-card *ngFor="let pet of pets" class="mini-pet-card" (click)="selectPet(pet)" [class.selected]="pet.id === selectedPet?.id">
+            <ion-img [src]="pet.photo_url || 'https://placehold.co/170x120/4f5b66/FFF?text=' + pet.species" [alt]="pet.name"></ion-img>
+            <ion-card-header>
+              <ion-card-title>{{ pet.name }}</ion-card-title>
+            </ion-card-header>
+          </ion-card>
+          <ion-card *ngIf="pets.length === 0" class="mini-pet-card add-new-card empty-state" (click)="addPet()">
+            <div class="add-new-content">
+              <ion-icon name="add-outline"></ion-icon>
+              <ion-label>Add your first pet!</ion-label>
+            </div>
+          </ion-card>
+          <ion-card *ngIf="pets.length > 0" class="mini-pet-card add-new-card" (click)="addPet()">
+            <div class="add-new-content">
+              <ion-icon name="add-outline"></ion-icon>
+              <ion-label>Add Pet</ion-label>
+            </div>
+          </ion-card>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="widget-card quick-info-card" *ngIf="selectedPet">
+      <ion-card-header>
+        <ion-img 
+          [src]="selectedPet.photo_url || 'https://placehold.co/100x100/4f5b66/FFF?text=' + selectedPet.species" 
+          [alt]="selectedPet.name" 
+          class="quick-info-avatar">
+        </ion-img>
+        <div>
+          <ion-card-title>{{ selectedPet.name }}</ion-card-title>
+          <ion-card-subtitle>{{ selectedPet.breed || selectedPet.species }}</ion-card-subtitle>
+          <ion-card-subtitle>Age: (coming soon)</ion-card-subtitle>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="action-buttons">
+          <ion-button size="small" fill="outline"><ion-icon slot="start" name="add"></ion-icon>Add Record</ion-button>
+          <ion-button size="small" fill="outline"><ion-icon slot="start" name="alarm-outline"></ion-icon>Schedule</ion-button>
+        </div>
+        <ion-list class="details-list" lines="none">
+          <ion-item>
+            <ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
+            <ion-label>
+              <h2>Last Vet Visit</h2>
+              <p>{{ (selectedPet.last_vet_visit | date:'longDate' | uppercase) || 'NO VISITS LOGGED' }}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="shield-checkmark-outline" slot="start" [color]="selectedPet.vaccinated ? 'success' : 'medium'"></ion-icon>
+            <ion-label>
+              <h2>Vaccination</h2>
+              <p>{{ (selectedPet.last_vax_date | date:'longDate' | uppercase) || 'NO VAX LOGGED' }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+        <ion-card class="widget-card quick-info-card" *ngIf="selectedPet">
+      <ion-card-content>
+        <ion-list class="details-list" lines="none">
+           </ion-list>
+        
+        <div class="pet-about-notes" *ngIf="selectedPet.about">
+          <h3>About {{ selectedPet.name }}</h3>
+          <p>{{ selectedPet.about }}</p>
+        </div>
+
+        <ion-button
+          expand="block"
+          fill="clear"
+          class="see-all-btn"
+          [routerLink]="['/pets', selectedPet.id]">
+          View Full Profile
+          <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+      </ion-card-content>
+    </ion-card>
+    
+    <ion-card class="widget-card quick-info-card" *ngIf="!selectedPet && !isLoadingPets">
+      <ion-card-content class="no-pet-selected">
+        <ion-icon name="paw-outline"></ion-icon>
+        <ion-label>No pet selected</ion-label>
+        <p>Select a pet from the list above or add a new one.</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="widget-card vets-card">
+      <ion-card-header>
+        <ion-card-title>Nearby Vets</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngIf="isLoadingVets" class="loading-container"> 
+          <ion-spinner name="crescent"></ion-spinner>
+        </div>
+        <div *ngIf="!isLoadingVets && vetsError" class="error-container"> 
+          <ion-icon name="location-outline"></ion-icon>
+          <ion-label>{{ vetsError }}</ion-label>
+        </div>
+        <div *ngIf="!isLoadingVets && !vetsError"> 
+          <ion-list lines="full" class="vets-list">
+            <ion-item *ngFor="let vet of nearbyVets.slice(0, 3)">
+              <ion-icon name="location-outline" slot="start" color="primary"></ion-icon>
+              <ion-label>
+                <h2>{{ vet.name }}</h2>
+                <p>{{ vet.address }}</p>
+              </ion-label>
+              <div slot="end" class="rating">
+                <ion-icon name="star" color="warning"></ion-icon>
+                <ion-note>{{ vet.rating }}</ion-note>
+              </div>
+            </ion-item>
+            <ion-item *ngIf="nearbyVets.length === 0">
+              <ion-label class="ion-text-center">No vets found nearby.</ion-label>
+            </ion-item>
+          </ion-list>
+          <ion-button 
+            expand="block" 
+            fill="clear" 
+            class="see-all-btn" 
+            routerLink="/vets-map">
+            See all on map
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="widget-card quick-link-card" routerLink="/health">
+      <ion-card-header>
+        <ion-icon name="medkit-outline" color="primary"></ion-icon>
+        <ion-card-title>Health Records</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>View medical timeline, vaccines, and prescriptions.</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="widget-card quick-link-card" routerLink="/reminders">
+      <ion-card-header>
+        <ion-icon name="alarm-outline" color="primary"></ion-icon>
+        <ion-card-title>Reminders</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Manage feeding, medication, and grooming schedules.</p>
+      </ion-card-content>
+    </ion-card>
+    
+    <ion-card class="widget-card quick-link-card" routerLink="/shop">
+      <ion-card-header>
+        <ion-icon name="cart-outline" color="primary"></ion-icon>
+        <ion-card-title>Shop</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Re-order food, toys, and supplies.</p>
+      </ion-card-content>
+    </ion-card>
+
+  </div>
+</ion-content>

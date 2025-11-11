@@ -1,0 +1,62 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="transparent">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false" color="light"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Health Records</ion-title>
+    
+    <ion-buttons slot="end">
+      <ion-button (click)="openAddRecordModal()">
+        <ion-icon slot="icon-only" name="add-circle-outline" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar color="transparent" *ngIf="!isLoading && pets.length > 0">
+    <ion-segment [value]="selectedFilter" (ionChange)="filterChanged($event)" mode="md" scrollable>
+      <ion-segment-button value="all">
+        <ion-label>All Pets</ion-label>
+      </ion-segment-button>
+      <ion-segment-button *ngFor="let pet of pets" [value]="pet.id">
+        <ion-label>{{ pet.name }}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="isLoading" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+
+  <div *ngIf="!isLoading && allRecords.length === 0" class="empty-state">
+    <ion-icon name="medical-outline"></ion-icon>
+    <ion-label>No health records found</ion-label>
+    <ion-text color="medium">
+      <p>Tap the '+' button in the top right to add one.</p>
+    </ion-text>
+  </div>
+
+  <div *ngIf="!isLoading && allRecords.length > 0" class="records-list">
+    <ion-card class="record-card" *ngFor="let record of filteredRecords">
+      <ion-card-header>
+        <ion-card-subtitle 
+          *ngIf="selectedFilter === 'all'" 
+          class="pet-name-badge">
+          {{ getPetName(record.pet_id) }}
+        </ion-card-subtitle>
+        
+        <ion-card-title>{{ record.title }}</ion-card-title>
+        <ion-card-subtitle>{{ record.date | date:'longDate' | uppercase }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content *ngIf="record.notes">
+        <p>{{ record.notes }}</p>
+      </ion-card-content>
+    </ion-card>
+    
+    <div *ngIf="filteredRecords.length === 0" class="empty-state-filter">
+      <ion-text color="medium">No records found for this filter.</ion-text>
+    </div>
+  </div>
+
+</ion-content>

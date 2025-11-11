@@ -1,0 +1,118 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="transparent">
+    <ion-title>{{ isEditMode ? 'Edit Pet' : 'Add a New Pet' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="light" (click)="dismiss()">Cancel</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form *ngIf="petForm" [formGroup]="petForm" (ngSubmit)="submitForm()">
+    <div class="form-container">
+
+      <!-- Pet Name -->
+      <ion-item class="form-field">
+        <ion-input
+          formControlName="name"
+          label="Pet's Name"
+          labelPlacement="floating"
+          type="text"
+          required>
+        </ion-input>
+      </ion-item>
+      <div *ngIf="name?.invalid && (name?.dirty || name?.touched)" class="error-message">
+        <span>Name is required.</span>
+      </div>
+      
+      <!-- Species -->
+      <ion-item class="form-field">
+        <ion-input
+          formControlName="species"
+          label="Species (e.g., Dog, Cat)"
+          labelPlacement="floating"
+          type="text"
+          required>
+        </ion-input>
+      </ion-item>
+      <div *ngIf="species?.invalid && (species?.dirty || species?.touched)" class="error-message">
+        <span>Species is required.</span>
+      </div>
+
+      <!-- Breed -->
+      <ion-item class="form-field">
+        <ion-input formControlName="breed" label="Breed" labelPlacement="floating" type="text"></ion-input>
+      </ion-item>
+
+      <!-- Age -->
+      <ion-item class="form-field">
+        <ion-input formControlName="age" label="Age (e.g., '2 years')" labelPlacement="floating" type="text"></ion-input>
+      </ion-item>
+
+      <!-- About -->
+      <ion-item class="form-field">
+        <ion-textarea
+          formControlName="about"
+          label="About your pet"
+          labelPlacement="floating"
+          placeholder="What makes them unique?"
+          [autoGrow]="true">
+        </ion-textarea>
+      </ion-item>
+
+      <!-- Photo -->
+      <ion-item class="form-field">
+        <ion-input formControlName="photo_url" label="Photo URL" labelPlacement="floating" type="url"></ion-input>
+      </ion-item>
+      
+      <!-- Date Fields -->
+      <ion-item class="form-field">
+        <ion-label position="floating">Last Vet Visit</ion-label>
+        <ion-datetime-button datetime="vet-visit-picker"></ion-datetime-button>
+      </ion-item>
+      <ion-item class="form-field">
+        <ion-label position="floating">Last Vax Date</ion-label>
+        <ion-datetime-button datetime="vax-date-picker"></ion-datetime-button>
+      </ion-item>
+
+      <!-- Checkbox -->
+      <ion-item class="form-field checkbox-field">
+        <ion-label>Vaccinated?</ion-label>
+        <ion-checkbox formControlName="vaccinated" slot="end"></ion-checkbox>
+      </ion-item>
+
+      <!-- Date pickers (modals cannot use formControlName directly) -->
+      <ion-modal [keepContentsMounted]="true">
+        <ion-datetime
+          id="vet-visit-picker"
+          [value]="petForm.get('last_vet_visit')?.value"
+          (ionChange)="petForm.patchValue({ last_vet_visit: $event.detail.value })"
+          presentation="date">
+        </ion-datetime>
+      </ion-modal>
+
+      <ion-modal [keepContentsMounted]="true">
+        <ion-datetime
+          id="vax-date-picker"
+          [value]="petForm.get('last_vax_date')?.value"
+          (ionChange)="petForm.patchValue({ last_vax_date: $event.detail.value })"
+          presentation="date">
+        </ion-datetime>
+      </ion-modal>
+
+    </div>
+  </form>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar color="transparent">
+    <ion-button
+      (click)="submitForm()"
+      color="primary"
+      expand="block"
+      [disabled]="petForm.invalid"
+      class="main-action-button">
+      {{ isEditMode ? 'Update Pet' : 'Save Pet' }}
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

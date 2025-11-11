@@ -1,0 +1,412 @@
+/* Main grid layout for the dashboard */
+.main-grid-container {
+  display: grid;
+  // Mobile-first: single column
+  grid-template-columns: 1fr;
+  gap: 16px; // Space between cards
+  padding: 16px;
+}
+
+/* Base style for all widgets */
+.widget-card {
+  margin: 0; // The grid 'gap' handles all spacing
+  --background: var(--ion-card-background); 
+}
+
+/*
+ * 1. Welcome Card
+ */
+.welcome-card {
+  // This will make it span the full width
+  grid-column: 1 / -1; 
+  
+  ion-card-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  ion-card-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+  }
+}
+
+.stats-container {
+  display: flex;
+  flex-wrap: wrap; // Allows stats to wrap on small screens
+  align-items: center;
+  gap: 12px;
+  padding-top: 8px !important;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+
+  ion-icon {
+    font-size: 1.1rem;
+    margin-right: 2px;
+  }
+}
+
+.edit-profile-btn {
+  // Pushes the button to the right
+  margin-left: auto; 
+  --color: var(--ion-color-primary);
+  font-size: 0.8rem;
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+
+/*
+ * 2. Pet Carousel
+ * THIS CONTAINS THE FIX FOR YOUR LAYOUT BUG
+ */
+.pet-carousel-card ion-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* This is the key style that makes the carousel work */
+.pet-carousel {
+  display: flex;       /* Forces items into a row */
+  gap: 14px;
+  overflow-x: auto;  /* Makes the row scrollable horizontally */
+  padding: 4px;
+  padding-bottom: 16px; // Space for scrollbar
+  
+  // This hides the scrollbar itself but keeps the scrolling
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* This styles ALL cards inside the carousel */
+.mini-pet-card {
+  min-width: 170px;   /* This is what you wanted */
+  max-width: 170px;
+  height: 240px;
+  margin: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  --background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+
+  ion-img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+  }
+
+  ion-card-header {
+    padding: 12px;
+  }
+
+  ion-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+  }
+}
+
+/* Style for the "Add Pet" card */
+.add-new-card {
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  --background: rgba(255, 255, 255, 0.05);
+
+  .add-new-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    gap: 8px;
+    
+    ion-icon {
+      font-size: 3rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+    ion-label {
+      color: rgba(255, 255, 255, 0.7);
+    }
+  }
+}
+
+/* Style for the "Empty" Add Pet card */
+.add-new-card.empty-state {
+  min-width: 200px; /* Slightly wider when it's the only thing */
+  height: 240px;
+
+  ion-label {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+/* Style for the selected pet in the carousel */
+.mini-pet-card.selected {
+  border: 3px solid var(--ion-color-primary);
+  box-shadow: 0 0 15px var(--ion-color-primary-shade);
+}
+
+
+/*
+ * 3. Selected Pet "Quick Info" Card
+ */
+.quick-info-card {
+  ion-card-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .quick-info-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%; // Make it circular
+    object-fit: cover;
+    border: 3px solid var(--ion-color-primary);
+    flex-shrink: 0; // Don't let it shrink
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+
+    ion-button {
+      --border-radius: 20px;
+      font-size: 0.8rem;
+    }
+  }
+
+  .details-list {
+    --background: transparent;
+    background: transparent;
+
+    ion-item {
+      --background: transparent;
+      --padding-start: 0;
+      margin-bottom: 8px;
+
+      ion-icon {
+        font-size: 1.5rem;
+        margin-right: 12px;
+      }
+      h2 {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.6);
+        font-weight: 500;
+        margin-bottom: 4px;
+      }
+      p {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #ffffff;
+      }
+    }
+  }
+}
+
+/* Placeholder for when no pet is selected */
+.no-pet-selected {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  text-align: center;
+  gap: 8px;
+
+  ion-icon {
+    font-size: 3rem;
+    color: rgba(255, 255, 255, 0.2);
+  }
+  ion-label {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  p {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+/*
+ * 4. "Nearby Vets" Card
+ */
+.vets-card {
+  ion-list {
+    --background: transparent;
+    background: transparent;
+    padding: 0;
+  }
+  
+  ion-item {
+    --background: transparent;
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    margin-bottom: 8px;
+
+    h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 2px;
+    }
+    p {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.6);
+      white-space: normal;
+    }
+  }
+
+  .rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.9rem;
+    color: var(--ion-color-warning);
+    
+    ion-note {
+      color: #ffffff;
+    }
+  }
+}
+
+/* Shared styles for Vets and Pets cards */
+.see-all-btn {
+  --color: var(--ion-color-primary);
+  margin-top: 8px;
+}
+
+.loading-container,
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px;
+  text-align: center;
+  gap: 8px;
+}
+.error-container {
+  ion-icon {
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.3);
+  }
+  ion-label {
+    color: rgba(255, 255, 255, 0.7);
+  }
+}
+
+
+/*
+ * 5. "Quick Link" Cards (Health, Reminders, Shop)
+ */
+.quick-link-card {
+  cursor: pointer; 
+  transition: all 0.2s ease-in-out;
+  
+  /* We are removing min-height and using flexbox */
+  display: flex;
+  flex-direction: column; /* Stack header and content vertically */
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  ion-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0; /* Prevents the header from shrinking */
+
+    ion-icon {
+      font-size: 1.8rem;
+    }
+
+    ion-card-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+  }
+
+  ion-card-content {
+    flex-grow: 1; /* Allows the content to fill the remaining space */
+    padding-top: 0; /* Reduces space above the text */
+    
+    p {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+  }
+}
+/*
+ * ======================================================
+ * NEW STYLE FOR "ABOUT" NOTES ON DASHBOARD
+ * ======================================================
+ */
+.pet-about-notes {
+  margin-top: 16px;
+  margin-bottom: 8px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+
+  h3 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0 0 4px 0;
+    text-transform: uppercase;
+  }
+  
+  p {
+    color: #ffffff;
+    font-size: 0.9rem;
+    white-space: pre-wrap; /* This respects line breaks */
+  }
+}
+/*
+ * Responsive Grid Layout
+ */
+
+/* On screens wider than 768px (tablets/desktops) */
+@media (min-width: 768px) {
+  .main-grid-container {
+    // 2-column grid
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Make Quick Info card span both columns */
+  .quick-info-card {
+    grid-column: 1 / span 2;
+  }
+}
+
+/* On screens wider than 1024px (desktops) */
+@media (min-width: 1024px) {
+  .main-grid-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .welcome-card {
+    grid-column: 1 / span 2;
+  }
+
+  /* Make Quick Info card span 2 columns */
+  .quick-info-card {
+    grid-column: 1 / span 2;
+  }
+}

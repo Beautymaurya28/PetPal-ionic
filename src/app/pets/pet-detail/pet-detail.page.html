@@ -1,0 +1,78 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="transparent">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ pet?.name || 'Pet Profile' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="onEdit()">
+        <ion-icon slot="icon-only" name="create-outline" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="isLoading" class="loading-container">
+    </div>
+  <div *ngIf="!isLoading && error" class="error-container">
+    </div>
+
+  <div *ngIf="!isLoading && pet">
+    
+    <div class="profile-header">
+      </div>
+    <ion-segment [value]="selectedTab" (ionChange)="segmentChanged($event)" mode="md">
+      </ion-segment>
+
+    <div class="tab-content">
+      
+      <div *ngIf="selectedTab === 'overview'" class="overview-content">
+        </div>
+
+      <div *ngIf="selectedTab === 'health'" class="health-tab-content">
+        </div>
+      
+      <div *ngIf="selectedTab === 'reminders'" class="reminders-tab-content">
+        
+        <ion-button 
+          expand="block" 
+          fill="outline" 
+          class="add-reminder-btn"
+          (click)="openAddReminderModal()">
+          <ion-icon name="add" slot="start"></ion-icon>
+          Add New Reminder
+        </ion-button>
+
+        <div *ngIf="isLoadingReminders" class="loading-container">
+          <ion-spinner name="crescent"></ion-spinner>
+        </div>
+
+        <div *ngIf="!isLoadingReminders && reminders.length === 0" class="empty-reminders">
+          <ion-icon name="alarm-outline"></ion-icon>
+          <ion-label>No reminders found</ion-label>
+          <ion-text color="medium">
+            <p>Tap the button above to add your first reminder, like for medicine or feeding.</p>
+          </ion-text>
+        </div>
+
+        <ion-list *ngIf="!isLoadingReminders && reminders.length > 0" lines="none" class="reminders-list">
+          <ion-item *ngFor="let reminder of reminders">
+            <ion-icon name="alarm-outline" slot="start" color="primary"></ion-icon>
+            <ion-label>
+              <h2>{{ reminder.title }}</h2>
+              <p>
+                {{ reminder.due_date | date:'longDate' }}
+                <span *ngIf="reminder.due_time"> at {{ reminder.due_time | date:'shortTime' }}</span>
+              </p>
+              <p *ngIf="reminder.recurrence !== 'none'" class="recurrence">
+                (Repeats: {{ reminder.recurrence | titlecase }})
+              </p>
+            </ion-label>
+            </ion-item>
+        </ion-list>
+      </div>
+      
+    </div>
+  </div>
+</ion-content>

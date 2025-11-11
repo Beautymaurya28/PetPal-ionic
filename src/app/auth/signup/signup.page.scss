@@ -1,0 +1,20 @@
+// Use the modern '@use' rule instead of '@import'
+@use "../login/login.page.scss" as login-styles;
+
+// Add specific styles for the signup checkbox
+.checkbox-field {
+  --background: transparent;
+  margin-top: 0.5rem;
+  margin-bottom: 8px;
+
+  ion-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  a {
+    color: var(--ion-color-primary);
+    text-decoration: underline;
+    font-weight: bold;
+  }
+}

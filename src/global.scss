@@ -1,0 +1,59 @@
+/* In src/global.scss */
+
+/* Import the Inter font (a clean sans-serif) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+body {
+  /* Apply the clean sans font globally */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 
+               "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Apply the global background gradient */
+ion-content {
+  --background: linear-gradient(160deg, #1f2d3a 0%, #1a1a2e 100%);
+}
+
+ion-content {
+  /* 64px for the button + 16px of extra space */
+  --padding-bottom: 80px; 
+}
+
+/* In src/global.scss (at the bottom) */
+
+/*
+ * Global Card Styling
+ * (For Phase 2)
+ */
+ion-card {
+  /* Use the variable we defined in variables.scss */
+  --background: var(--ion-card-background);
+  
+  border-radius: 20px;
+  
+  /* Your 2xl soft shadow, adjusted for a dark background */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
+}
+
+/* * Button Styling
+ */
+
+/* * Primary buttons (filled sky-blue)
+ * This is automatic! Just add color="primary" to an <ion-button>
+ * e.g. <ion-button color="primary">Login</ion-button>
+ */
+
+/* * Secondary buttons (white outline)
+ * We'll create a custom class for this.
+ */
+ion-button.button-outline-white {
+  --background: transparent;
+  --border-color: #ffffff;
+  --border-width: 1px;
+  --border-style: solid;
+  --color: #ffffff;
+  --color-activated: #eeeeee;
+  
+  /* Ripple effect color */
+  --ripple-color: #ffffff;
+}
